@@ -1,6 +1,7 @@
 package wator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Observable;
 
 public class Environment extends Observable {
@@ -79,6 +80,29 @@ public class Environment extends Observable {
         
         return freeNeighbors;
     }
+    
+    public Position getRandomFreeNeighborPosition(Position pos) {
+        ArrayList<Position> freeNeighbors = this.getFreeNeighborsList(pos);
+		if (!freeNeighbors.isEmpty()) {
+	        Collections.shuffle(freeNeighbors);
+	        return freeNeighbors.get(0);
+		}
+		return null;
+    } 
+    
+    public Position getRandomFreePosition() {
+        ArrayList<Position> freePositions = new ArrayList<Position>();
+        for (int i = 0 ; i < NB_ROWS ; i++) {
+            for (int j = 0 ; j < NB_COLS ; j++) {
+            	freePositions = this.addFreeValidPosition(freePositions, new Position(i,j));
+            }
+        }
+		if (!freePositions.isEmpty()) {
+	        Collections.shuffle(freePositions);
+	        return freePositions.get(0);
+		}
+		return null;
+    }   
 
 	public void moveAgent(Position pos, Position newPos) {
 		Agent a = this.map[pos.getRow()][pos.getCol()];
@@ -86,5 +110,10 @@ public class Environment extends Observable {
 		this.map[pos.getRow()][pos.getCol()] = null;
 		
 		a.setEnv(this);
+	}
+	
+	public void addAgent(Agent agent) {
+		Position pos = agent.getPos();
+		this.map[pos.getRow()][pos.getCol()] = agent;
 	}
 }

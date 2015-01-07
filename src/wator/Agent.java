@@ -1,19 +1,18 @@
 package wator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 public abstract class Agent {
 	
-	private Position pos;
-	private Environment env;
+	protected Position pos;
+	protected Environment env;
 	protected int age;
 	protected int breedingAge;
 	
-	public Agent(int breedingAge, Position pos) {
+	public Agent(Environment env, Position pos, int breedingAge) {
 		this.age = 0;
 		this.pos = pos;
 		this.breedingAge = breedingAge;
+		env.addAgent(this);
+		this.env = env;
 	}
 	
 	
@@ -41,23 +40,33 @@ public abstract class Agent {
 		return breedingAge;
 	}
 
-	public abstract void doIt();
+	public abstract void doIt(); //Ne pas oublier dans doIt de modifier l'âge de l'agent
 	
 	public void breed() {
 		/* Bébé poisson : si il y a un espace libre autour, on le met aléatoirement autour sur un espace libre,
 		 * sinon on choisit un espace libre aléatoire dans la grille
 		 */
+		if (this.age != 0 && this.age % this.breedingAge == 0) {
+			Position newPos = this.env.getRandomFreeNeighborPosition(this.pos);
+			if (newPos == null) {
+				newPos = this.env.getRandomFreePosition();
+			}
+			if (newPos != null) {
+				this.createAgent(newPos);
+			}
+		}		
 	}
 	
+	public abstract void createAgent(Position pos);
+
+
 	public void move() {
-		ArrayList<Position> freeNeighborsList = this.env.getFreeNeighborsList(this.pos);
-		//randomized position
-		Collections.shuffle(freeNeighborsList);
-		Position newPos = freeNeighborsList.get(0);
-		//update de la position de l'agent et préciser à l'environnement qu'il n'est plus là et qu'il s'est déplacé 
-		this.env.moveAgent(this.pos, newPos);
-		this.setPos(newPos);
-		//Ne pas oublier dans doIt de modifier l'âge de l'agent
+		Position newPos = this.env.getRandomFreeNeighborPosition(this.pos);
+		if (newPos != null) {
+			//update de la position de l'agent et préciser à l'environnement qu'il n'est plus là et qu'il s'est déplacé 
+			this.env.moveAgent(this.pos, newPos);
+			this.setPos(newPos);			
+		}
 	}
 	
 	public void aging() {

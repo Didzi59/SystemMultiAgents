@@ -13,15 +13,36 @@ public class Shark extends Agent {
 		this.starvationTime = 0;
 	}
 	
-	public void feed() {
-		//TODO
+	public boolean feed() {
+        Position newPos = this.env.getRandomEatableNeighborPosition(this.pos);
+        if (newPos != null) {
+            this.env.removeAgent(newPos);
+            this.starvationTime = 0;
+            this.move(newPos);
+            return true;
+        } else {
+            this.starvationTime++;
+            return false;
+        }
 	}
 
 	@Override
 	public void doIt() {
-		// TODO Auto-generated method stub
 		// S'il se nourrit, il ne se déplace pas (car déplacé pour manger)
+        this.breed();
+        boolean hasEaten = this.feed();
+        if (!hasEaten) {
+            this.move();
+        }
+        if (this.mustDie()) {
+            this.env.removeAgent(this.pos);
+        }
+        this.aging();
 	}
+
+    private boolean mustDie() {
+        return this.starvationTime >= STARVATION_AGE;
+    }
 	
 	public boolean isEatable() {
 		return false;
@@ -31,5 +52,9 @@ public class Shark extends Agent {
 	public void createAgent(Position pos) {
 		new Shark(this.env, pos);
 	}
+
+    public String toString() {
+        return "S";
+    }
 
 }

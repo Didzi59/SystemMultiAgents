@@ -22,4 +22,8 @@ public class Fish extends Agent {
 	public void createAgent(Position pos) {
 		new Fish(this.env, pos);
 	}
+
+    public String toString() {
+        return "f";
+    }
 }

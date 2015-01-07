@@ -1,5 +1,6 @@
 package wator;
 
+import java.lang.System;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
@@ -45,6 +46,14 @@ public class Environment extends Observable {
         }
         return voisins;
 	}
+
+    public ArrayList<Position> addEatableValidPosition(ArrayList<Position> voisins, Position pos) {
+        Agent a = this.map[pos.getRow()][pos.getCol()];
+        if (this.isValidPosition(pos) && a != null && a.isEatable()) {
+            voisins.add(pos);
+        }
+        return voisins;
+    }
 	
     /**
      * Cette méthode permet de récupérer les positions voisines de la position passée en paramètre
@@ -80,6 +89,21 @@ public class Environment extends Observable {
         
         return freeNeighbors;
     }
+
+    public ArrayList<Position> getEatableNeighborsList(Position pos) {
+        ArrayList<Position> eatableNeighbors = new ArrayList<Position>();
+
+        eatableNeighbors = this.addEatableValidPosition(eatableNeighbors, pos.left());
+        eatableNeighbors = this.addEatableValidPosition(eatableNeighbors, pos.right());
+        eatableNeighbors = this.addEatableValidPosition(eatableNeighbors, pos.up());
+        eatableNeighbors = this.addEatableValidPosition(eatableNeighbors, pos.down());
+        eatableNeighbors = this.addEatableValidPosition(eatableNeighbors, pos.leftup());
+        eatableNeighbors = this.addEatableValidPosition(eatableNeighbors, pos.rightup());
+        eatableNeighbors = this.addEatableValidPosition(eatableNeighbors, pos.leftdown());
+        eatableNeighbors = this.addEatableValidPosition(eatableNeighbors, pos.rightdown());
+
+        return eatableNeighbors;
+    }
     
     public Position getRandomFreeNeighborPosition(Position pos) {
         ArrayList<Position> freeNeighbors = this.getFreeNeighborsList(pos);
@@ -88,8 +112,17 @@ public class Environment extends Observable {
 	        return freeNeighbors.get(0);
 		}
 		return null;
-    } 
-    
+    }
+
+    public Position getRandomEatableNeighborPosition(Position pos) {
+        ArrayList<Position> eatableNeighbors = this.getEatableNeighborsList(pos);
+        if (!eatableNeighbors.isEmpty()) {
+            Collections.shuffle(eatableNeighbors);
+            return eatableNeighbors.get(0);
+        }
+        return null;
+    }
+
     public Position getRandomFreePosition() {
         ArrayList<Position> freePositions = new ArrayList<Position>();
         for (int i = 0 ; i < NB_ROWS ; i++) {
@@ -113,7 +146,27 @@ public class Environment extends Observable {
 	}
 	
 	public void addAgent(Agent agent) {
-		Position pos = agent.getPos();
-		this.map[pos.getRow()][pos.getCol()] = agent;
-	}
+        Position pos = agent.getPos();
+        this.map[pos.getRow()][pos.getCol()] = agent;
+    }
+
+    public void removeAgent(Agent agent) {
+        Position pos = agent.getPos();
+        this.map[pos.getRow()][pos.getCol()] = null;
+    }
+
+    public void display() {
+        for (int i = 0 ; i < NB_ROWS ; i++) {
+            System.out.print("*");
+            for (int j = 0 ; j < NB_COLS ; j++) {
+                Agent a = this.map[pos.getRow()][pos.getCol()];
+                String display = " ";
+                if (a != null) {
+                    display = a.toString();
+                }
+                System.out.print(display);
+            }
+            System.out.println("*");
+        }
+    }
 }

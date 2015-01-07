@@ -14,10 +14,6 @@ public class Fish extends Agent {
 		}
 	}
 	
-	public void move() {
-		//TODO : faire un random. Si la case est libre OK, sinon faire le tour dans le sens des aiguilles d'une montre
-		// gérer les murs 
-	}
 	
 	public void doIt() {
 		this.breed();

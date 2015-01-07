@@ -24,11 +24,6 @@ public class Shark extends Agent {
 		
 	}
 
-	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	public boolean isEatable() {
 		return false;

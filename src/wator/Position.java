@@ -2,7 +2,9 @@ package wator;
 
 public class Position {
 
+	//hauteur
 	private final int row;
+	//largeur
 	private final int col;
 	
 	/**
@@ -46,6 +48,39 @@ public class Position {
      */
     public Position down () {
         return new Position((row + 1), col);
+    }
+    
+    
+    /**
+     * Give the position to the leftup of the current position
+     * @return position to the leftup
+     */
+    public Position leftup () {
+        return new Position((row - 1), (col - 1));
+    }
+
+    /**
+     * Give the position to the rightup of the current position
+     * @return position to the rightup
+     */
+    public Position rightup () {
+        return new Position((row - 1), (col + 1));
+    }
+
+    /**
+     * Give the position leftdown of the current position
+     * @return position leftdown
+     */
+    public Position leftdown () {
+        return new Position((row + 1), (col - 1));
+    }
+
+    /**
+     * Give the position rightdown of the current position
+     * @return position rightdown
+     */
+    public Position rightdown () {
+        return new Position((row + 1), (col + 1));
     }
 
     @Override

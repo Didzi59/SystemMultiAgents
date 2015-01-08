@@ -62,6 +62,10 @@ public abstract class Agent {
 
 	public void move() {
 		Position newPos = this.env.getRandomFreeNeighborPosition(this.pos);
+		this.moveTo(newPos);
+	}
+	
+	public void moveTo(Position newPos) {
 		if (newPos != null) {
 			//update de la position de l'agent et préciser à l'environnement qu'il n'est plus là et qu'il s'est déplacé 
 			this.env.moveAgent(this.pos, newPos);

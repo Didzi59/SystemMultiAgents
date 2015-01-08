@@ -18,7 +18,7 @@ public class Shark extends Agent {
         if (newPos != null) {
             this.env.removeAgent(newPos);
             this.starvationTime = 0;
-            this.move(newPos);
+            this.moveTo(newPos);
             return true;
         } else {
             this.starvationTime++;

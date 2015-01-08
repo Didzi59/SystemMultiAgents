@@ -1,18 +1,18 @@
 package wator;
 
-import java.lang.System;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Observable;
 
-public class Environment extends Observable {
+public class Environment {
 	
 	private Agent[][] map;
+
+	private ViewEnvironnement view;
 	
 	//Hauteur = nombre de lignes
-	private static final int NB_ROWS = 20;
+	public static final int NB_ROWS = 20;
 	//Largeur = nombre de colonnes
-	private static final int NB_COLS = 20;
+	public static final int NB_COLS = 20;
 	
 	public Environment() {
 		this.map = new Agent[NB_ROWS][NB_COLS];
@@ -21,6 +21,7 @@ public class Environment extends Observable {
 				this.map[i][j] = null;
 			}
 		}
+		this.view = new ViewEnvironnement(this);
 	}
 
 	public Agent[][] getMap() {
@@ -48,7 +49,7 @@ public class Environment extends Observable {
 	}
 
     public ArrayList<Position> addEatableValidPosition(ArrayList<Position> voisins, Position pos) {
-        Agent a = this.map[pos.getRow()][pos.getCol()];
+        Agent a = this.getAgent(pos);
         if (this.isValidPosition(pos) && a != null && a.isEatable()) {
             voisins.add(pos);
         }
@@ -105,6 +106,20 @@ public class Environment extends Observable {
         return eatableNeighbors;
     }
     
+    public ArrayList<Agent> getAgentsList() {
+        ArrayList<Agent> agents = new ArrayList<Agent>();      
+        for (int i = 0 ; i < NB_ROWS ; i++) {
+            for (int j = 0 ; j < NB_COLS ; j++) {
+            	Agent a = this.map[i][j]; 
+            	if (a != null) {
+            		agents.add(a);
+            	}
+            }
+        }
+        Collections.shuffle(agents);
+        return agents;
+    }
+    
     public Position getRandomFreeNeighborPosition(Position pos) {
         ArrayList<Position> freeNeighbors = this.getFreeNeighborsList(pos);
 		if (!freeNeighbors.isEmpty()) {
@@ -150,23 +165,34 @@ public class Environment extends Observable {
         this.map[pos.getRow()][pos.getCol()] = agent;
     }
 
-    public void removeAgent(Agent agent) {
-        Position pos = agent.getPos();
+    public void removeAgent(Position pos) {
         this.map[pos.getRow()][pos.getCol()] = null;
     }
 
     public void display() {
-        for (int i = 0 ; i < NB_ROWS ; i++) {
-            System.out.print("*");
-            for (int j = 0 ; j < NB_COLS ; j++) {
-                Agent a = this.map[pos.getRow()][pos.getCol()];
-                String display = " ";
-                if (a != null) {
-                    display = a.toString();
-                }
-                System.out.print(display);
-            }
-            System.out.println("*");
-        }
+    	view.refresh();
     }
+    
+    public String toString() {
+    	String s = "";
+        for (int i = 0 ; i < NB_ROWS ; i++) {
+            for (int j = 0 ; j < NB_COLS ; j++) {
+                Agent a = this.map[i][j];
+                if (a != null) {
+                	s += a.toString();
+                } else {
+                	s += " ";
+                }
+            }
+            s += "\n";
+        }
+        return s;
+    }
+
+	public Agent getAgent(Position pos) {
+		if (this.isValidPosition(pos)) {
+			return this.map[pos.getRow()][pos.getCol()];
+		}
+		return null;
+	}
 }

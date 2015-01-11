@@ -1,10 +1,15 @@
 package wator;
 
+/**
+ * Cette classe représente une position
+ * @author  Jérémy Bossut et Julia Leven
+ */
 public class Position {
 
-	//hauteur
+	// L'ordonné de la position (la hauteur)
 	private final int row;
-	//largeur
+	
+	// L'abscisse de la position l'abscisse)
 	private final int col;
 	
 	/**

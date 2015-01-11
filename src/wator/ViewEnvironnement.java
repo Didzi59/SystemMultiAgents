@@ -5,19 +5,33 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+/**
+ * Cette classe représente la vue de l'environnement
+ * @author Jérémy Bossut et Julia Leven
+ */
 public class ViewEnvironnement extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
+	// L'environnement
 	Environment env;
+	
+	// La fenêtre
 	private JTextArea textArea;
 	
+	/**
+	 * Le constructeur représentant la vue de l'environnement
+	 * @param env l'environnement que l'on souhaite afficher
+	 */
 	public ViewEnvironnement(Environment env){
 		super();
 		this.env = env;
 		init();
 	}
     
+	/**
+	 * Initialisation de la vue 
+	 */
     public void init(){
         textArea = new JTextArea("", Environment.NB_ROWS, Environment.NB_COLS);
         textArea.setEditable(false);
@@ -28,6 +42,9 @@ public class ViewEnvironnement extends JFrame {
         this.setVisible(true);
     }
     
+    /**
+     * Rafraichissement de la vue
+     */
     public void refresh(){
     	((JTextArea) this.getContentPane().getComponent(0)).setText(env.toString());
     }

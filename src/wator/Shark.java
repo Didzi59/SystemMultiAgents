@@ -1,5 +1,9 @@
 package wator;
 
+import java.awt.Image;
+
+import image.ImageGetter;
+
 /**
  * Cette classe représente un requin
  * @author Jérémy Bossut et Julia Leven
@@ -13,7 +17,10 @@ public class Shark extends Agent {
 	// Le délai sans manger avant que le requin meurt
 	public static final int STARVATION_AGE = 3;
 	
-	// La ériode durant laquelle le requin n'a pas mangé
+	//Le nom de l'agent
+	public static final String NAME = "Shark";
+	
+	// La période durant laquelle le requin n'a pas mangé
 	private int starvationTime;
 	
 	/**
@@ -22,7 +29,7 @@ public class Shark extends Agent {
 	 * @param pos sa position dans l'environnement
 	 */
 	public Shark(Environment env, Position pos) {
-		super(env, "Requin",1, pos, BREEDING_AGE);
+		super(env,1, pos, BREEDING_AGE);
 		this.starvationTime = 0;
 	}
 	
@@ -91,11 +98,15 @@ public class Shark extends Agent {
 	}
 
 	/**
-	 * Cette méthode donne la représentation d'un requin dans l'environnement
-	 * @return la représentation d'un poisson dans l'environnement
+	 * Cette méthode retourne le nom de l'agent
+	 * @return le nom de l'agent
 	 */
-    public String toString() {
-        return "S";
+    public String getName() {
+        return NAME;
     }
+    
+	public Image getImage() {
+		return ImageGetter.IMAGE_SHARK;
+	}
 
 }

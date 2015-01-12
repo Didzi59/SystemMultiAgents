@@ -1,5 +1,9 @@
 package wator;
 
+import image.ImageGetter;
+
+import java.awt.Image;
+
 /**
  * Cette classe représente un poisson
  * @author Jérémy Bossut et Julia Leven
@@ -9,13 +13,16 @@ public class Fish extends Agent {
 	//Le délai de reproduction d'un poisson
 	public static final int BREEDING_AGE = 2;
 	
+	//Le nom de l'agent
+	public static final String NAME = "Fish";
+	
 	/**
 	 * Le constructeur représentant un poisson
 	 * @param env l'environnement dans lequel évolue un poisson
 	 * @param pos la position du poisson dans l'environnement
 	 */
 	public Fish(Environment env, Position pos) {
-		super(env, "Poisson",0, pos, BREEDING_AGE);
+		super(env,0, pos, BREEDING_AGE);
 	}	
 	
 	/**
@@ -45,10 +52,14 @@ public class Fish extends Agent {
 	}
 
 	/**
-	 * Cette méthode donne la représentation d'un poisson dans l'environnement
-	 * @return la représentation d'un poisson dans l'environnement
+	 * Cette méthode retourne le nom de l'agent
+	 * @return le nom de l'agent
 	 */
-    public String toString() {
-        return "f";
+    public String getName() {
+        return NAME;
     }
+    
+	public Image getImage() {
+		return ImageGetter.IMAGE_FISH;
+	}
 }

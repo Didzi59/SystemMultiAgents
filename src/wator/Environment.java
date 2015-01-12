@@ -2,6 +2,8 @@ package wator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Cette classe représente l'environnement dans lequel évolue l'agent
@@ -14,18 +16,16 @@ public class Environment {
 	
 	// Le plus grand identifiant d'un agent que l'on a rencontré dans l'environnement
 	private int idMaxAgent;
-
-	// La vue de l'environnement
-	private ViewEnvironnement view;
 	
 	// L'objet permettant de réaliser des statistiques sur l'environnement
 	private WatorStat watorStat;
+
+	private Set<String> setNames;
 	
 	// Le nombre de lignes
-	
 	public static final int NB_ROWS = 40;
-	// Le nombre de colonnes
 	
+	// Le nombre de colonnes
 	public static final int NB_COLS = 40;
 	
 	/**
@@ -43,7 +43,7 @@ public class Environment {
 		this.idMaxAgent = 0;
 		// Initialisation de la classe permettant de réaliser des statistiques et de l'environnement
 		this.watorStat = new WatorStat(this);
-		this.view = new ViewEnvironnement(this);
+		this.setNames = new HashSet<String>();
 	}
 
 	/**
@@ -70,7 +70,27 @@ public class Environment {
 		this.idMaxAgent = idMaxAgent;
 	}
 	
+	public int getNbFish() {
+		ArrayList<Agent> lag = this.getAgentsList();
+		int cpt = 0;
+		for (Agent a : lag) {
+			if (a.isEatable()) {
+				cpt++;
+			}
+		}
+		return cpt;
+	}
 	
+	public int getNbShark() {
+		ArrayList<Agent> lag = this.getAgentsList();
+		int cpt = 0;
+		for (Agent a : lag) {
+			if (!a.isEatable()) {
+				cpt++;
+			}
+		}
+		return cpt;
+	}
 	
 	/**
 	 * Cette méthode retourne le nombre de lignes 
@@ -185,6 +205,15 @@ public class Environment {
     }
     
     /**
+     * Cette méthode permet de récupérer le nom de toutes les espèces existantes
+     * @return un ensemble contenant le nom de toutes les espèces existantes
+     */
+    public Set<String> getSetNames() {
+    	return this.setNames;
+    }
+    
+    
+    /**
      * Cette méthode permet de récupérer aléatoirement, une position voisine à la position passée en paramètre, qui est libre 
      * @param pos la position
      * @return une position voisine et libre
@@ -253,6 +282,7 @@ public class Environment {
 	public void addAgent(Agent agent) {
         Position pos = agent.getPos();
         this.map[pos.getRow()][pos.getCol()] = agent;
+        this.setNames.add(agent.getName());
     }
 
 	/**
@@ -263,12 +293,6 @@ public class Environment {
         this.map[pos.getRow()][pos.getCol()] = null;
     }
 
-    /**
-     * Cette méthode permet de rafraichir la vue, afin que celle-ci soit toujours en accord avec l'environnement
-     */
-    public void display() {
-    	view.refresh();
-    }
     
     /**
 	 * Cette méthode permet d'ajouter des entêtes aux fichiers de statistiques créés

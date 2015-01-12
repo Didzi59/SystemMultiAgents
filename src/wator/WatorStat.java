@@ -39,6 +39,23 @@ public class WatorStat {
 		this.mapNbAgent = new HashMap<String, Integer[]>();
 		this.mapAgeAgent = new HashMap<String, Integer[]>();
 		this.chrono = 0;
+		// Supression des fichiers 
+		this.removeFile("FileCSV/fileWatorEvolution.csv");
+		this.removeFile("FileCSV/fileWatorAge.csv");
+	}
+	
+	public Map<String,Integer[]> getNbAgent() {
+		return this.mapNbAgent;
+	}
+	
+	public void initMapNbAgentInit() {
+		this.mapNbAgent.clear();
+		Set<String> listNameAgent = this.env.getSetNames();
+		for(String nameAgent : listNameAgent) {
+			Integer[] values = new Integer[1];
+			values[0] = 0;
+			this.mapNbAgent.put(nameAgent, values);
+		}
 	}
 
 	/**
@@ -73,6 +90,16 @@ public class WatorStat {
 		File folder = new File(pathnameFolder);
 		folder.mkdir();
 		return folder;
+	}
+	
+	/**
+	 * Cette méthode permet de supprimer un fichier si il existe déjà
+	 * @param pathnameFile le chemin d'accès vers le fichier à supprimer
+	 */
+	public void removeFile(String pathnameFile) {
+		File fileToRemove = new File(pathnameFile);
+		if (fileToRemove.exists())
+			fileToRemove.delete();
 	}
 	
 	/**
@@ -251,9 +278,13 @@ public class WatorStat {
 	 * Cette méthode permet de sauvegarder les statistiques du nombre d'agents en fonction de l'âge dans un fichier CSV.
 	 */
 	public void saveAgeAgentByTurn() {
-		ArrayList<Map<String,Integer[]>> listNbAgent = new ArrayList<Map<String,Integer[]>>();
-		listNbAgent.add(this.mapAgeAgent);
-		this.createFileWithData("FileCSV","fileWatorAge.csv",listNbAgent);
+		// On récupère les statistiques tous les 10 tours
+		if (this.chrono%10 == 0) {
+			ArrayList<Map<String,Integer[]>> listNbAgent = new ArrayList<Map<String,Integer[]>>();
+			listNbAgent.add(this.mapAgeAgent);
+			
+			this.createFileWithData("FileCSV","fileWatorAge.csv",listNbAgent);
+		}
 	}
 	
 	
@@ -264,12 +295,24 @@ public class WatorStat {
 		this.saveNbAgentByTurn();
 		this.saveAgeAgentByTurn();
 	}
+	
+	/*
+	public void initMapNbAgent() {
+		Integer[] values = new Integer[this.env.getAgentsList()];
+		for (int i = 0; i < maxIdAgent; i++) {
+			this.mapNbAgent.put(key, value)
+			values[i] = 0;
+		}
+		return values;
+	}
+	*/
+
 
 	/**
 	 * Cette méthode permet de calculer les statistiques
 	 */
 	public void generateStatByTurn() {
-		this.mapNbAgent.clear();
+		this.initMapNbAgentInit();
 		this.mapAgeAgent.clear();
 		for (int i = 0; i < this.env.getNbRows(); i++) {
 			for (int j = 0; j< this.env.getNbCols(); j++) {

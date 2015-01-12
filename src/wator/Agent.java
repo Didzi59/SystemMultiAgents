@@ -1,5 +1,7 @@
 package wator;
 
+import java.awt.Image;
+
 /**
  * Cette classe abstraite représente un agent qui va évoluer dans l'environnement
  * @author Jérémy Bossut et Julia Leven
@@ -15,9 +17,6 @@ public abstract class Agent {
 	// L'environnement dans lequel évolue l'agent
 	protected Environment env;
 	
-	//Le nom de l'agent
-	protected String name;
-	
 	// L'âge de l'agent
 	protected int age;
 	
@@ -32,10 +31,9 @@ public abstract class Agent {
 	 * @param pos la position de l'agent dans l'environnement
 	 * @param breedingAge le délai de reproduction de l'agent
 	 */
-	public Agent(Environment env, String name, int idAgent, Position pos, int breedingAge) {
+	public Agent(Environment env, int idAgent, Position pos, int breedingAge) {
 		this.idAgent = idAgent;
 		this.age = 0;
-		this.name = name;
 		this.pos = pos;
 		this.breedingAge = breedingAge;
 		env.addAgent(this);
@@ -86,9 +84,7 @@ public abstract class Agent {
 	 * Cette méthode retourne le nom de l'agent
 	 * @return le nom de l'agent
 	 */
-	public String getName() {
-		return this.name;
-	}
+	public abstract String getName();
 	
 	/**
 	 * Cette méthode retourne la position de l'agent dans l'environnement
@@ -170,4 +166,6 @@ public abstract class Agent {
 	 * @return true si l'agent est mangeable, false sinon
 	 */
 	public abstract boolean isEatable();
+
+	public abstract Image getImage();
 }

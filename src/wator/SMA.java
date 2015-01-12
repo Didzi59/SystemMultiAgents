@@ -3,6 +3,8 @@ package wator;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import view.WatorView;
+
 /**
  * Cette classe représente le système multi-agent
  * @author Julia Leven et Jérémy Bossut
@@ -16,7 +18,7 @@ public class SMA {
 	private int chronon;
 	
 	// La latence
-	private static final int LATENCY = 200;
+	private static final int LATENCY = 50;
 	
 	// Le nombre de requins au départ
 	private static final int NB_SHARKS = 50;
@@ -27,13 +29,18 @@ public class SMA {
 	// Le nombre de tour avant la fin du programme
 	private int nbTurn;
 	
+	// La vue de l'environnement
+	private WatorView view;
+	
+	
 	/**
 	 * Le constructeur représentant le système multi-agent
 	 * @param nbTurn le nombre de tour avant la fin du programme
 	 */
 	public SMA(int nbTurn) {
 		this.init();
-		this.display();
+		this.view = new WatorView(this);
+		//this.display();
 		this.nbTurn = nbTurn;
 	}
 	
@@ -78,10 +85,10 @@ public class SMA {
 				agent.doIt();
 			}
 		}
-		// On affiche l'environnement 
-		this.display();
 		// On génère les statistiques
 		this.env.generateStatByTurn();
+		// On affiche l'environnement 
+		this.display();
 	}
 	
 	/**
@@ -91,18 +98,38 @@ public class SMA {
 		System.out.println("Run Wator");
 		this.chronon = 0;
 		this.env.printFirstLineStats();
-		while (this.chronon < this.nbTurn) {
+		while (!this.isTerminated()) {
 			this.runOnce();
 			this.chronon++;
 		}
 	}
 	
+	public boolean isTerminated() {
+		boolean res = (this.env.getNbFish() == Environment.NB_ROWS * Environment.NB_COLS || this.env.getAgentsList().size() == 0);
+		if (this.nbTurn != 0) {
+			res = res || (this.chronon > this.nbTurn);
+		}
+		return res; 
+	}
+	
+    /**
+     * Cette méthode permet de rafraichir la vue, afin que celle-ci soit toujours en accord avec l'environnement
+     */
 	public void display() {
-		this.env.display();
+		view.refresh();
 		try {
 		    TimeUnit.MILLISECONDS.sleep(LATENCY);
 		} catch (InterruptedException e) {
 		    //Handle exception
 		}
 	}
+	
+	public Environment getEnv() {
+		return this.env;
+	}
+
+	public int getChronon() {
+		return chronon;
+	}
+	
 }

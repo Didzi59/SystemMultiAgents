@@ -1,0 +1,11 @@
+set datafile separator ";"
+set term png
+set xlabel "Number of turns"
+set ylabel "Number of agents"
+set output './graphs/fileWatorEvolution.png'
+plot './FileCSV/fileWatorEvolution.csv' using 1:2 title 'Sharks' w l, '' using 1:3 title 'Fish' w l
+
+set xlabel "Number of fish"
+set ylabel "Number of sharks"
+set output './graphs/fileWatorFishSharks.png'
+plot './FileCSV/fileWatorEvolution.csv' using 2:3 title '' w l

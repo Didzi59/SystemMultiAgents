@@ -52,15 +52,10 @@ public class WatorView extends JFrame {
         this.setSize(new Dimension(1000, 800));
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+		this.sma.addObserver(this.boardPanel);
+		this.sma.addObserver(this.statusPanel);
+		this.setVisible(true);
     }
-    
-    /**
-     * Rafraichissement de la vue
-     */
-    public void refresh(){
-    	this.setVisible(true);
-    	this.boardPanel.display();
-        this.statusPanel.display();
-    }
-    
+        
 }

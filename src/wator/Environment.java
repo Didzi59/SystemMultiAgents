@@ -271,8 +271,6 @@ public class Environment {
 		Agent a = this.map[pos.getRow()][pos.getCol()];
 		this.map[newPos.getRow()][newPos.getCol()] = a;
 		this.map[pos.getRow()][pos.getCol()] = null;
-		
-		a.setEnv(this);
 	}
 	
 	/**

@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.GridLayout;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -8,7 +10,7 @@ import javax.swing.JPanel;
 import wator.Environment;
 import wator.SMA;
 
-public class StatusPanel extends JPanel {
+public class StatusPanel extends JPanel implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -38,7 +40,8 @@ public class StatusPanel extends JPanel {
         add(sharksLabel);
     }
     
-    public void display() {
+	@Override
+	public void update(final Observable o, final Object arg) {
         Environment environment = sma.getEnv();
         chrononsLabel.setText(String.valueOf(sma.getChronon()));
         fishLabel.setText(String.valueOf(environment.getNbFish()));

@@ -2,13 +2,15 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 
 import wator.Agent;
 import wator.Environment;
 
-public class BoardPanel extends JPanel {
+public class BoardPanel extends JPanel implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private Environment env;
@@ -16,7 +18,6 @@ public class BoardPanel extends JPanel {
     public BoardPanel(Environment env) {
         super();
         this.env = env;
-
     }
 
     @Override
@@ -40,12 +41,12 @@ public class BoardPanel extends JPanel {
                             Color.BLUE,
                             null);
                 }
-                //g.fillOval(x * squareWidth, y * squareHeight, squareWidth, squareHeight);
             }
         }
     }
     
-    public void display() {
+	@Override
+	public void update(final Observable o, final Object arg) {
         this.repaint();
     }
 }

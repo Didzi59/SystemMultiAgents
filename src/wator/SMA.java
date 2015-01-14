@@ -1,6 +1,7 @@
 package wator;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
 import view.WatorView;
@@ -9,7 +10,7 @@ import view.WatorView;
  * Cette classe représente le système multi-agent
  * @author Julia Leven et Jérémy Bossut
  */
-public class SMA {
+public class SMA extends Observable {
 	
 	// L'environnement
 	private Environment env;
@@ -18,20 +19,17 @@ public class SMA {
 	private int chronon;
 	
 	// La latence
-	private static final int LATENCY = 50;
+	private static final int LATENCY = 100;
 	
 	// Le nombre de requins au départ
-	private static final int NB_SHARKS = 50;
+	private static final int NB_SHARKS = 100;
 	
 	// Le nombre de poissons au début
 	private static final int NB_FISH = 250;
 	
 	// Le nombre de tour avant la fin du programme
 	private int nbTurn;
-	
-	// La vue de l'environnement
-	private WatorView view;
-	
+		
 	
 	/**
 	 * Le constructeur représentant le système multi-agent
@@ -39,8 +37,7 @@ public class SMA {
 	 */
 	public SMA(int nbTurn) {
 		this.init();
-		this.view = new WatorView(this);
-		//this.display();
+		new WatorView(this);
 		this.nbTurn = nbTurn;
 	}
 	
@@ -116,7 +113,8 @@ public class SMA {
      * Cette méthode permet de rafraichir la vue, afin que celle-ci soit toujours en accord avec l'environnement
      */
 	public void display() {
-		view.refresh();
+		this.setChanged();
+		super.notifyObservers();
 		try {
 		    TimeUnit.MILLISECONDS.sleep(LATENCY);
 		} catch (InterruptedException e) {

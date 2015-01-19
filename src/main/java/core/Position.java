@@ -1,4 +1,4 @@
-package wator;
+package core;
 
 /**
  * Cette classe représente une position

@@ -1,4 +1,6 @@
-package view;
+package core.view;
+
+import core.SMA;
 
 import java.awt.Dimension;
 
@@ -6,33 +8,31 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import wator.SMA;
-
 /**
  * Cette classe représente la vue de l'environnement
  * @author Jérémy Bossut et Julia Leven
  */
-public class WatorView extends JFrame {
+public class View extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-    private BoardPanel boardPanel;
-    private StatusPanel statusPanel;
 	
-	// L'environnement
+	// Le système multi-agent
 	private SMA sma;
 	
+	private BoardPanel boardPanel;
+	
+	private StatusPanel statusPanel;
 	
 	/**
 	 * Le constructeur représentant la vue de l'environnement
-	 * @param env l'environnement que l'on souhaite afficher
+	 * @param sma l'environnement que l'on souhaite afficher
 	 */
-	public WatorView(SMA sma){
-		super("Wator");
+	public View(SMA sma){
+		super("MultiAgentSystem");
 		this.sma = sma;
 		init();
 	}
 	
-    
 	/**
 	 * Initialisation de la vue 
 	 */
@@ -56,6 +56,5 @@ public class WatorView extends JFrame {
 		this.sma.addObserver(this.boardPanel);
 		this.sma.addObserver(this.statusPanel);
 		this.setVisible(true);
-    }
-        
+    }     
 }

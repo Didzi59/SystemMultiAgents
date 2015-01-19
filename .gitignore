@@ -3,4 +3,6 @@ bin/
 .project
 .settings/
 .idea/
+.target/
+Agents.iml
 *~

@@ -1,4 +1,4 @@
-package image;
+package wator;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -13,12 +13,11 @@ public class ImageGetter {
 	private BufferedImage imageFish; 
 	
 	private ImageGetter() {
-		this.imageShark = null;
-		try {                
-			imageShark = ImageIO.read(this.getClass().getResource("shark.png"));
-			imageFish = ImageIO.read(this.getClass().getResource("fish.png"));
+		try {
+			imageShark = ImageIO.read(this.getClass().getResource("/shark.png"));
+			imageFish = ImageIO.read(this.getClass().getResource("/fish.png"));
 		} catch (Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			System.out.println("Marche pas!");
 		}
 	}
@@ -30,4 +29,5 @@ public class ImageGetter {
 	private Image getImageFish() {
 		return this.imageFish;
 	}
+	
 }

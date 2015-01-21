@@ -1,5 +1,6 @@
 package wator.agents;
 
+import java.awt.Color;
 import java.awt.Image;
 
 import core.Environment;
@@ -66,5 +67,9 @@ public class Fish extends Animal {
         this.aging();
 		this.breed();
 		this.move();
+	}
+	
+	public Color getColor() {
+		return Color.LIGHT_GRAY;
 	}
 }

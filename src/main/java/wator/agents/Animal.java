@@ -78,17 +78,7 @@ public abstract class Animal extends Agent {
         this.moveTo(newPos);
     }
 	
-	/**
-	 * Cette méthode permet de représenter l'animal dans l'environnement
-	 * @param g le graphique 
-	 * @param panel JPanel
-	 * @param x l'abscisse de l'agent
-	 * @param y l'ordonnée de l'agent
-	 */
-	public void representationAgent(Graphics g, JPanel panel, int x, int y) {
-		int squareHeight = panel.getHeight() / this.env.getMap().length;
-        int squareWidth = panel.getWidth() /  this.env.getMap()[0].length;
-
+    public void representationAgent(Graphics g, int x, int y, int squareWidth, int squareHeight) {
 		g.drawImage(this.getImage(),
         		x * squareWidth, y * squareHeight, 
         		x * squareWidth+squareWidth, y * squareHeight+squareHeight, 

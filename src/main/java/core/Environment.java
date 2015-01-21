@@ -2,6 +2,7 @@ package core;
 
 import core.view.StatusPanel;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -250,4 +251,8 @@ public class Environment {
 	public void updateStatusPanel(StatusPanel statusPanel) {}
 
     public void addStatusPanelLabels(StatusPanel statusPanel) {}
+    
+    public Color getDefaultColor() {
+    	return Color.BLUE;
+    }
 }

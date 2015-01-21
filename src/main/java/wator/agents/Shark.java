@@ -1,5 +1,6 @@
 package wator.agents;
 
+import java.awt.Color;
 import java.awt.Image;
 
 import core.Position;
@@ -112,5 +113,9 @@ public class Shark extends Animal {
 		// Le requin essaie de se reproduire
         this.breed();		
         // Le requin meurt puisqu'il n'a pas mangé durant une certaine période
+	}
+
+	public Color getColor() {
+		return Color.DARK_GRAY;
 	}
 }

@@ -1,8 +1,7 @@
 package core;
 
+import java.awt.Color;
 import java.awt.Graphics;
-
-import javax.swing.JPanel;
 
 /**
  * Cette classe abstraite représente un agent qui va évoluer dans l'environnement
@@ -89,13 +88,23 @@ public abstract class Agent {
 	 */
 	public abstract void doIt();
 	
+    /**
+     * Cette méthode récupère le couleur qui représente un agent
+     * @return la couleur qui représente un agent
+     */
+    public abstract Color getColor();
+	
 	/**
 	 * Cette méthode permet de représenter l'agent dans l'environnement
 	 * @param g le graphique 
-	 * @param panel JPanel
 	 * @param x l'abscisse de l'agent
 	 * @param y l'ordonnée de l'agent
+	 * @param squareWidth la largeur d'un bloc
+	 * @param squareHeight la hauteur d'un bloc
 	 */
-	public abstract void representationAgent(Graphics g, JPanel panel, int x, int y);
+	public void representationAgent(Graphics g, int x, int y, int squareWidth, int squareHeight) {
+		g.setColor(this.getColor());
+		g.fillRect(x * squareWidth, y * squareHeight, squareWidth, squareHeight);
+	}
 	
 }

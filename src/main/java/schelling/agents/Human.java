@@ -47,12 +47,6 @@ public abstract class Human extends Agent {
 	public int setSimilarity(int similarity) {
 		return this.similarity = similarity;
 	}
-
-    /**
-     * Cette méthode récupère le couleur qui représente un huamain
-     * @return la couleur qui représente un humain
-     */
-    public abstract Color getColor();
 	
 	/**
 	 * Cette méthode permet de savoir si l'humain passé en paramètre est de la même catégorie que l'humain actuel
@@ -94,16 +88,6 @@ public abstract class Human extends Agent {
 		if (!this.isSatisfied()) {
 			this.moveTo(this.env.getRandomFreePosition());
 		}
-	}
-	
-
-	@Override
-	public void representationAgent(Graphics g, JPanel panel, int x, int y) {
-		int squareHeight = panel.getHeight() / this.env.getMap().length;
-        int squareWidth = panel.getWidth() /  this.env.getMap()[0].length;
-
-		g.setColor(this.getColor());
-		g.fillRect(x * squareWidth, y * squareHeight, squareWidth, squareHeight);
 	}
 
 }

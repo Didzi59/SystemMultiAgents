@@ -3,7 +3,6 @@ package core.view;
 import core.Agent;
 import core.Environment;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import java.util.Observable;
@@ -26,6 +25,7 @@ public class BoardPanel extends JPanel implements Observer {
     public BoardPanel(Environment env) {
         super();
         this.env = env;
+        //this.setBackground(env.getDefaultColor());
     }
 
     /**
@@ -40,11 +40,10 @@ public class BoardPanel extends JPanel implements Observer {
    		 
    		 for (int y = 0; y < board.length; y++) {
    			 for (int x = 0; x < board[y].length; x++) {
-   				 if (board[y][x] == null) {
-   					 g.setColor(Color.BLUE);
-   					 g.fillRect(x * squareWidth, y * squareHeight, squareWidth, squareHeight);
-   				 } else {
-   					 board[y][x].representationAgent(g,this,x,y);
+				 g.setColor(this.env.getDefaultColor());
+				 g.fillRect(x * squareWidth, y * squareHeight, squareWidth, squareHeight);
+   				 if (board[y][x] != null) {
+   					 board[y][x].representationAgent(g,x,y,squareWidth,squareHeight);
    				 }
    			 }
    		 }

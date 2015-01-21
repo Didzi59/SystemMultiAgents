@@ -6,3 +6,4 @@ bin/
 .target/
 Agents.iml
 *~
+/target/

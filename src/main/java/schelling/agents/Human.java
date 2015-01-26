@@ -1,10 +1,5 @@
 package schelling.agents;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
-import javax.swing.JPanel;
-
 import core.Agent;
 import core.Environment;
 import core.Position;

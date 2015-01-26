@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import javax.swing.JPanel;
-
 import core.Agent;
 import core.Environment;
 import core.Position;
@@ -89,8 +87,8 @@ public abstract class Animal extends Agent {
 	}
 	
 	/**
-     * Cette méthode permet de savoir si le requin est mangeable
-     * @return false, le requin n'est jamais mangeable
+     * Cette méthode permet de savoir si l'animal est mangeable
+     * @return false, l'animal n'est pas mangeable
      */
 	public abstract boolean isEatable();
 	

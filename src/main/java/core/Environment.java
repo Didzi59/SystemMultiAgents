@@ -150,6 +150,38 @@ public class Environment {
 		int j = pos.getCol();
 		return i < this.nbRows && i >= 0 && j < this.nbCols && j >= 0 ;
 	}
+	
+	/**
+	 * Cette méthode permet d'ajouter une position à la liste des positions voisines pour la position passée en paramètre
+	 * @param voisins la liste des positions voisines de la position passée en paramètre
+	 * @param pos la position
+	 */
+	public void addValidPosition(ArrayList<Position> voisins, Position pos) {
+        if (this.isValidPosition(pos)) {
+        	voisins.add(pos);
+        }
+	}
+	
+    
+    /**
+     * Cette méthode permet de récupérer les positions voisines de la position passée en paramètre, sur laquelle il y a un agent mangeable
+     * @param pos la position
+     * @return une liste contenant les positions voisines de la position passée en paramètre, sur laquelle il y a un agent mangeable
+     */
+    public ArrayList<Position> getNeighborsList(Position pos) {
+        ArrayList<Position> neighbors = new ArrayList<Position>();
+
+        this.addValidPosition(neighbors, pos.left());
+        this.addValidPosition(neighbors, pos.right());
+        this.addValidPosition(neighbors, pos.up());
+        this.addValidPosition(neighbors, pos.down());
+        this.addValidPosition(neighbors, pos.leftup());
+        this.addValidPosition(neighbors, pos.rightup());
+        this.addValidPosition(neighbors, pos.leftdown());
+        this.addValidPosition(neighbors, pos.rightdown());
+
+        return neighbors;
+    }
 
 	/**
 	 * Cette méthode permet d'ajouter une position libre à la liste des positions voisines et libres pour la position passée en paramètre
@@ -161,6 +193,27 @@ public class Environment {
         	voisins.add(pos);
         }
 	}
+	
+    
+    /**
+     * Cette méthode permet de récupérer les positions voisines et libres de la position passée en paramètre, sur laquelle il y a un agent mangeable
+     * @param pos la position
+     * @return une liste contenant les positions voisines et libres de la position passée en paramètre, sur laquelle il y a un agent mangeable
+     */
+    public ArrayList<Position> getFreeNeighborsList(Position pos) {
+        ArrayList<Position> freeNeighbors = new ArrayList<Position>();
+
+        this.addFreeValidPosition(freeNeighbors, pos.left());
+        this.addFreeValidPosition(freeNeighbors, pos.right());
+        this.addFreeValidPosition(freeNeighbors, pos.up());
+        this.addFreeValidPosition(freeNeighbors, pos.down());
+        this.addFreeValidPosition(freeNeighbors, pos.leftup());
+        this.addFreeValidPosition(freeNeighbors, pos.rightup());
+        this.addFreeValidPosition(freeNeighbors, pos.leftdown());
+        this.addFreeValidPosition(freeNeighbors, pos.rightdown());
+
+        return freeNeighbors;
+    }
 
     /**
      * Cette méthode permet de récupérer aléatoirement une position libre
@@ -238,7 +291,7 @@ public class Environment {
 	 * Cette méthode permet d'ajouter des entêtes aux fichiers de statistiques créés
 	 */
     public void printFirstLineStats() {
-    	this.printFirstLineStats();
+    	//this.printFirstLineStats();
     }
     
     /**

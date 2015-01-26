@@ -1,77 +1,89 @@
 package pacman;
 
 import java.awt.Color;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import pacman.agents.*;
 import core.Environment;
 import core.Position;
 
+/**
+ * Cette classe représente un tableau
+ * @author Leven Julia et Bossut Jérémy
+ */
 public class Board extends Environment {
+
+	// La map contenant toutes les distances
+    public Map<Position,int[][]> dijkstraMemory;
 	
-	private Map<Position, int[][]> dijkstraMap;
-	
+	/**
+	 * Le constructeur représentant un environnement
+	 * @param nbRows le nombre de lignes constituant l'environnement
+	 * @param nbCols le nombre de colonnes constituant l'environnement
+	 */
 	public Board(int nbRows, int nbCols) {
 		super(nbRows, nbCols);
-		this.dijkstraMap = new HashMap<Position, int[][]>();
+        this.dijkstraMemory = new HashMap<Position, int[][]>();
 	}
 	
+	/**
+	 * Cette méthode permet d'initialiser l'environnement
+	 * @param nbPreys le nombre de proies dans l'environnement
+     * @param nbPredators le nombre de prédateurs dans l'environnement
+	 * @param nbWalls le nombre de murs dans l'environnement
+	 */
 	public void init(int nbPreys, int nbPredators, int nbWalls) {
+		// Initialisation des murs
 		for (int i=0; i < nbWalls; i++) {
 			Position pos = this.getRandomFreePosition();
 			new Wall(this, pos);
 		}
+		// Initialisation du nombre de proies
         for (int i=0; i < nbPreys; i++) {
             Position pos = this.getRandomFreePosition();
-            new Prey(this, pos);
+            Prey p = new Prey(this, pos);
+            // Déplace la proie si elle se trouve dans une position bloquante
+            while (p.isBlocked()) {
+            	pos = this.getRandomFreePosition();
+            	p.moveTo(pos);
+            	System.out.println("Déblocage : "+pos);
+            }
         }
-
+        // Initialisation du nombre de prédateurs
         for (int i=0; i < nbPredators; i++) {
             Position pos = this.getRandomFreePosition();
             new Predator(this, pos);
         }
         
 	}
-	
+
+    /**
+	 * Cette méthode donne la couleur par défaut des cases sans agent
+	 */
     public Color getDefaultColor() {
     	return Color.LIGHT_GRAY;
     }
-    
-    //TODO: récupère toutes les proies sur la map
-    public Set<Prey> getPreys() {
-    	return new HashSet<Prey>();
-    }
-    
-    public void computeDijkstraMap() {
-    	Set<Prey> set = this.getPreys();
-    	for (Prey prey : set) {
-    		Position pos = prey.getPos();
-    		if (!this.dijkstraMap.containsKey(pos)) {
-        		this.dijkstraMap.put(pos, this.computeDijkstraValues(pos));
-    		}
-    	}
-    }
-    
-    private void addValue(int[][] tab, Position pos, int value) {
-    	if (this.isValidPosition(pos) && tab[pos.getRow()][pos.getCol()] == -1) {
-    		tab[pos.getRow()][pos.getCol()] = value;
-    	}
-    }
-    
-    public int[][] computeDijkstraValues(Position pos) {
-    	int[][] res = new int[this.getNbRows()][this.getNbCols()]; //init à -1 partout
-    	
-    	this.addValue(res, pos, 0);
-    	this.addValue(res, pos.left(), 1);
-    	this.addValue(res, pos.right(), 1);
-    	this.addValue(res, pos.up(), 1);
-    	this.addValue(res, pos.down(), 1);
-    	
-    	
-    	return res;
-    }
+
+    /**
+	 * Cette méthode permet d'ajouter des entêtes aux fichiers de statistiques créés
+	 */
+	public void printFirstLineStats() {
+		return;
+	}
+	
+	/**
+	 * Cette méthode permet de générer les statistiques
+	 */
+	public void generateStatByTurn() {
+		return;
+	}	
+ 
+	/**
+	 * Cette méthode permet de savoir si le jeu doit se terminer
+	 * @return true si le jeu doit se terminer, false sinon
+	 */
+	public boolean isTerminated() {
+		return (this.getNbAgent("Prey") == 0);
+	}
 
 }

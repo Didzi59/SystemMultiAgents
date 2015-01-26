@@ -10,7 +10,10 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-
+/**
+ * Cette classe est un panel représentant l'environnement
+ * @author Leven Julia et Jérémy Bossut
+ */
 public class BoardPanel extends JPanel implements Observer {
 
 	private static final long serialVersionUID = 1L;
@@ -55,4 +58,5 @@ public class BoardPanel extends JPanel implements Observer {
 	public void update(final Observable o, final Object arg) {
         this.repaint();
     }
+	
 }

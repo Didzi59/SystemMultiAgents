@@ -43,30 +43,13 @@ public class Sea extends Environment {
         this.nbAgentsByName.put(Fish.NAME, nbFish);
 	}
 	
+	/**
+	 * Cette méthode permet de savoir si le jeu doit se terminer
+	 * @return true si le jeu doit se terminer, false sinon
+	 */
 	public boolean isTerminated() {
 		return (this.getNbAgent("Fish") == this.getNbRows() * this.getNbCols() || this.getAgentsList().size() == 0);
 	}
-
-
-    /**
-     * Cette méthode permet de récupérer les positions voisines et libres de la position passée en paramètre
-     * @param pos la position
-     * @return une liste contenant les positions voisines et libres de la position passée en paramètre
-     */
-    public ArrayList<Position> getFreeNeighborsList(Position pos) {
-        ArrayList<Position> freeNeighbors = new ArrayList<Position>();
-
-        this.addFreeValidPosition(freeNeighbors, pos.left());
-        this.addFreeValidPosition(freeNeighbors, pos.right());
-        this.addFreeValidPosition(freeNeighbors, pos.up());
-        this.addFreeValidPosition(freeNeighbors, pos.down());
-        this.addFreeValidPosition(freeNeighbors, pos.leftup());
-        this.addFreeValidPosition(freeNeighbors, pos.rightup());
-        this.addFreeValidPosition(freeNeighbors, pos.leftdown());
-        this.addFreeValidPosition(freeNeighbors, pos.rightdown());
-
-        return freeNeighbors;
-    }
 
     /**
      * Cette méthode permet de récupérer aléatoirement, une position voisine à la position passée en paramètre, qui est libre

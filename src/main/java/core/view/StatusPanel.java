@@ -13,6 +13,10 @@ import java.util.Observer;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Cette classe est un panel représentant les données
+ * @author Leven Julia et Jérémy Bossut
+ */
 public class StatusPanel extends JPanel implements Observer{
 	
 private static final long serialVersionUID = 1L;

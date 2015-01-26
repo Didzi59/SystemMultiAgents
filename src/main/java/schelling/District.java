@@ -100,6 +100,10 @@ public class District extends Environment {
         return cpt;
     }
 
+    /**
+	 * Cette méthode permet de savoir si le jeu doit se terminer
+	 * @return true si le jeu doit se terminer, false sinon
+	 */
     public boolean isTerminated() {
         ArrayList<Agent> agents = this.getAgentsList();
         boolean res = true;

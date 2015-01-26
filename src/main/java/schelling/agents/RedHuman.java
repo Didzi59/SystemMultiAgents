@@ -28,4 +28,5 @@ public class RedHuman extends Human {
     public Color getColor() {
         return Color.RED;
     }
+    
 }

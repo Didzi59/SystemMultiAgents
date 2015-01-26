@@ -19,8 +19,10 @@ public class View extends JFrame {
 	// Le système multi-agent
 	private SMA sma;
 	
+	// La panel à gauche représentant l'environnement
 	private BoardPanel boardPanel;
 	
+	// Le panel à droite avec les données
 	private StatusPanel statusPanel;
 	
 	/**

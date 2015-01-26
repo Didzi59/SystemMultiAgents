@@ -3,10 +3,14 @@ package pacman;
 import core.Main;
 import core.SMA;
 
+/**
+ * La classe permet de lancer le jeu Pacman
+ * @author Julia Leven et Jérémy Bossut
+ */
 public class MainPacman extends Main {
 	
 	/**
-	 * Le méthode principale permettant de lancer le programme Pacman
+	 * Le méthode principale permettant de lancer le jeu Pacman
 	 * @param args les arguments en ligne de commande
 	 */
 	public static void main(String[] args){
@@ -24,7 +28,7 @@ public class MainPacman extends Main {
         int nbPreys = Integer.parseInt(Main.getListArguments().get(4));
 		int nbPredators = Integer.parseInt(Main.getListArguments().get(5));
 		
-		// Lancement du programme Schelling
+		// Lancement du programme Pacman
 		Board board = new Board(nbRows, nbCols);
 		board.init(nbPreys, nbPredators, nbWalls);
 		new SMA(board,nbTurns,100).run();
